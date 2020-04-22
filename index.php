@@ -1,58 +1,60 @@
 <?php 
 
-	require 'config/db_connect.php';
+//Student login
 
-	if(isset($_POST['login']))
-	{
+$error='';
+if(isset($_POST['login']))
+{
+  $rno=$_POST['RollNumber'];
+  $psw=$_POST['password'];
+  $con=mysqli_connect('localhost','Dhruv','u18co019#hmsproject','hms');
 
-		$uname=$_POST['username'];
-		$psw=$_POST['password'];
-		$error='';
+  if($con)
+  {
+    $sql="SELECT * FROM students WHERE college_id='$rno' AND password='$psw' ";
 
-		if($conn)
-		{
-			$sql="SELECT * FROM users WHERE Username='$uname' AND Password='$psw' ";
-
-			$result=mysqli_query($conn,$sql);
-			if(mysqli_num_rows($result)>0)
-			{
-				//code
-			}
-			else
-			{
-				$error= "* Incorrect username or password";
-			}
-		}
-	}
+    $result=mysqli_query($con,$sql);
+    if(mysqli_num_rows($result)>0)
+    {
+      //code
+      echo 'Login Success';
+    }
+    else
+    {
+      $error="*Incorrect username or password";
+    }
+  }
+  mysqli_close($con);
+}
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
+  <title>Student Login Page</title>
 
   <style>
 
-  	body
-  	{
-  		background: #eee;
-  	}
-  	.login-form
-  	{
-  		border :solid gray 1px;
-  		width: 20%;
-  		border-radius: 5px;
-  		margin: 100px auto;
-  		background: white;
-  	}
-  	#button
-  	{
-  		color :#fff;
-  		background : #337ab7;
-  		padding: 5px;
-  		margin-left:70%;
-  	}
+    body
+    {
+      background: #eee;
+    }
+    .login-form
+    {
+      border :solid gray 1px;
+      width: 20%;
+      border-radius: 5px;
+      margin: 100px auto;
+      background: white;
+    }
+    #button
+    {
+      color :#fff;
+      background : #337ab7;
+      padding: 5px;
+      margin-left:70%;
+    }
 
 
   </style>
@@ -60,27 +62,47 @@
 </head>
 <body>
 
-	<div class="login-form">
+  <h1 style="text-align: center;">
+        <u>Student Login</u>
+  </h1>
 
-		<form action="login.php" method="post">
-			<p>
-				<label>Username:</label>
-				<input type="text" name="username" placeholder="eg. U18CO019/u18co019">
-			</p>
+  <div class="login-form">
 
-			<p>
-				<label>Password:</label>
-				<input type="password" name="password">
-				<div style="color:red;"><?php echo $error; ?></div>
-			</p>
 
-			<div>
-				<input type="submit" id="button" name="login" value="Login">
-			</div>
 
-		</form>
+    <form action="student_login.php" method="post">
 
-	</div>
+
+
+      <p>
+        <label>RollNumber:</label>
+        <input type="text" name="RollNumber" placeholder="eg. U18CO019">
+      </p>
+
+      <p>
+        <label>Password:</label>
+        <input type="password" name="password">
+        <div style="color:red;"><?php echo $error; ?></div>
+      </p>
+
+      <div>
+        <input type="submit" id="button" name="login" value="Login">
+      </div>
+
+    </form>
+    <p>
+      Don't have an account yet?
+      <a href="http://localhost/HMS/student_signup.php">Signup</a>
+    </p>
+
+  </div>
+
+
+  <h2 style="text-align: center;">
+
+  Not a student? Click <a href="http://localhost/HMS/manager-adminLogin.php">here</a> to login    
+
+  </h2>
 
 </body>
 </html>
