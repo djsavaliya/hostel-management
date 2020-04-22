@@ -1,301 +1,302 @@
 <?php 
+	session_start();
 
-$errors=array('fname'=>'','lname'=>'','RollNumber'=>'','password'=>'','cpassword'=>'','email'=>'','phone'=>'','dob'=>'');
+	require 'config/db_connect.php';
 
-if(isset($_POST['signup']))
-{
-	$fname=$_POST['fname'];
-	$lname=$_POST['lname'];
-	$rnumber=$_POST['RollNumber'];
-	$dob=$_POST['DOB'];
-	$email=$_POST["email"];
-	$phone=$_POST["phone"];
-	$password=$_POST['password'];
-	$cpassword=$_POST['cpassword'];
+	$errors=array('fname'=>'','lname'=>'','RollNumber'=>'','password'=>'','cpassword'=>'','email'=>'','phone'=>'','dob'=>'');
 
-
-	$valid=true;
-
-	//Validate first name
-
-	if(strlen($fname)==0)
+	if(isset($_POST['signup']))
 	{
-		$errors['fname']="*First Name can't be empty";
-		$valid=false;
-	}
-	else
-	{
-		for($i=0;$i<strlen($fname);$i++)
+		$fname=$_POST['fname'];
+		$lname=$_POST['lname'];
+		$rnumber=$_POST['RollNumber'];
+		$dob=$_POST['DOB'];
+		$email=$_POST["email"];
+		$phone=$_POST["phone"];
+		$password=$_POST['password'];
+		$cpassword=$_POST['cpassword'];
+
+
+		$valid=true;
+
+		//Validate first name
+
+		if(strlen($fname)==0)
 		{
-			if(!ctype_alpha($fname[$i]))
-			{
-				$errors['fname']='*First Name can contain only alphabets';
-				$valid=false;
-				break;
-			}
-		}
-	}
-
-	//Validate last name
-
-	if(strlen($lname)==0)
-	{
-		$errors['lname']="*Last Name can't be empty";
-		$valid=false;
-	}
-	else
-	{
-		for($i=0;$i<strlen($lname);$i++) 
-		{
-			if(!ctype_alpha($lname[$i]))
-			{
-				$errors['lname']='*Last Name can contain only alphabets';
-				$valid=false;
-				break;
-			}
-		}
-	}
-
-	//Validate rollnumber//college_id
-
-	if(strlen($rnumber)==0)
-	{
-		$valid=false;
-		$errors['RollNumber']="*Roll Number can't be empty";
-	}
-	else
-	{
-		if(strlen($rnumber)!=8 or $rnumber[0]!='U' or !ctype_digit($rnumber[1]) or !ctype_digit($rnumber[2]) or !ctype_upper($rnumber[3]) or !ctype_upper($rnumber[4]) or !ctype_digit($rnumber[5]) or !ctype_digit($rnumber[6]) or !ctype_digit($rnumber[7]))
-		{
-			$errors['RollNumber']='*Enter a valid roll number';
+			$errors['fname']="*First Name can't be empty";
 			$valid=false;
 		}
-	}
-
-	//Validate Date of Birth
-
-	if(strlen($dob)!=10)
-	{
-		$errors['dob']="*Enter a valid date and in valid format";
-		$valid=false;
-	}
-	else
-	{
-
-		function check_leap_year($year)
+		else
 		{
-			return ($year%4==0) and ($year%100!=0) or ($year%400==0);
+			for($i=0;$i<strlen($fname);$i++)
+			{
+				if(!ctype_alpha($fname[$i]))
+				{
+					$errors['fname']='*First Name can contain only alphabets';
+					$valid=false;
+					break;
+				}
+			}
 		}
 
-		$date=substr($dob,0,2);
-		$month=substr($dob,3,2);
-		$year=substr($dob,6,4);
-		if(ctype_digit($date) and ctype_digit($month) and ctype_digit($year) and $dob[2]=='-' and $dob[5]=='-')
+		//Validate last name
+
+		if(strlen($lname)==0)
 		{
-			$date=(int)$date;
-			$month=(int)$month;
-			$year=(int)$year;
-			if($month<1 or $month>12)
-			{
-				$errors['dob']="*Enter a valid date and in valid format";
-				$valid=false;
-			}
-			else
-			{
-				if($month==1)
-				{
-					if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==2) 
-				{
-					if(check_leap_year($year))
-					{
-						if($date<1 or $date>29)
-					    {
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-					    }
-					}
-					else
-					{
-						if($date<1 or $date>28)
-					    {
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-					    }
-					}
-				}
-				elseif($month==3) 
-				{
-				    if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}	
-				}
-				elseif($month==4) 
-				{
-					if($date<1 or $date>30)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==5) 
-				{
-					if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==6) 
-				{
-					if($date<1 or $date>30)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==7) 
-				{
-					if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==8) 
-				{
-					if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==9) 
-				{
-					if($date<1 or $date>30)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==10) 
-				{
-					if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				elseif($month==11) 
-				{
-					if($date<1 or $date>30)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}
-				}
-				else 
-				{
-				    if($date<1 or $date>31)
-					{
-						$errors['dob']="*Enter a valid date and in valid format";
-						$valid=false;
-					}	
-				}
-			}
+			$errors['lname']="*Last Name can't be empty";
+			$valid=false;
 		}
 		else
+		{
+			for($i=0;$i<strlen($lname);$i++) 
+			{
+				if(!ctype_alpha($lname[$i]))
+				{
+					$errors['lname']='*Last Name can contain only alphabets';
+					$valid=false;
+					break;
+				}
+			}
+		}
+
+		//Validate rollnumber//college_id
+
+		if(strlen($rnumber)==0)
+		{
+			$valid=false;
+			$errors['RollNumber']="*Roll Number can't be empty";
+		}
+		else
+		{
+			/*if(strlen($rnumber)!=8 or $rnumber[0]!='U' or !ctype_digit($rnumber[1]) or !ctype_digit($rnumber[2]) or !ctype_upper($rnumber[3]) or !ctype_upper($rnumber[4]) or !ctype_digit($rnumber[5]) or !ctype_digit($rnumber[6]) or !ctype_digit($rnumber[7]))*/
+			if(strlen($rnumber)<6)
+			{
+				$errors['RollNumber']='*Enter a valid roll number';
+				$valid=false;
+			}
+		}
+
+		//Validate Date of Birth
+
+		if(strlen($dob)!=10)
 		{
 			$errors['dob']="*Enter a valid date and in valid format";
 			$valid=false;
 		}
-	}
-
-	//Validate Email
-
-	if(strlen($email)==0)
-	{
-		$errors['email']="*Email can't be empty";
-		$valid=false;
-	}
-	else if(!filter_var($email,FILTER_VALIDATE_EMAIL)) 
-	{
-		$errors["email"]="*Invalid email format";
-		$valid=false;
-	}
-
-	//Validate phone
-
-	if(strlen($phone)==0)
-	{
-		$errors['phone']="*Phone number can't be empty";
-		$valid=false;
-	}
-	else if(strlen($phone)!=10)
-	{
-		$errors['phone']="*Invalid phone number";
-		$valid=false;
-	}
-	else
-	{
-		for($i=0;$i<strlen($phone);$i++)
+		else
 		{
-			if(!ctype_digit($phone[$i]))
+
+			function check_leap_year($year)
 			{
-				$errors['phone']="*Invalid phone number";
+				return ($year%4==0) and ($year%100!=0) or ($year%400==0);
+			}
+
+			$date=substr($dob,0,2);
+			$month=substr($dob,3,2);
+			$year=substr($dob,6,4);
+			if(ctype_digit($date) and ctype_digit($month) and ctype_digit($year) and $dob[2]=='-' and $dob[5]=='-')
+			{
+				$date=(int)$date;
+				$month=(int)$month;
+				$year=(int)$year;
+				if($month<1 or $month>12)
+				{
+					$errors['dob']="*Enter a valid date and in valid format";
+					$valid=false;
+				}
+				else
+				{
+					if($month==1)
+					{
+						if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==2) 
+					{
+						if(check_leap_year($year))
+						{
+							if($date<1 or $date>29)
+						    {
+								$errors['dob']="*Enter a valid date and in valid format";
+								$valid=false;
+						    }
+						}
+						else
+						{
+							if($date<1 or $date>28)
+						    {
+								$errors['dob']="*Enter a valid date and in valid format";
+								$valid=false;
+						    }
+						}
+					}
+					elseif($month==3) 
+					{
+					    if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}	
+					}
+					elseif($month==4) 
+					{
+						if($date<1 or $date>30)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==5) 
+					{
+						if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==6) 
+					{
+						if($date<1 or $date>30)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==7) 
+					{
+						if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==8) 
+					{
+						if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==9) 
+					{
+						if($date<1 or $date>30)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==10) 
+					{
+						if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					elseif($month==11) 
+					{
+						if($date<1 or $date>30)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}
+					}
+					else 
+					{
+					    if($date<1 or $date>31)
+						{
+							$errors['dob']="*Enter a valid date and in valid format";
+							$valid=false;
+						}	
+					}
+				}
+			}
+			else
+			{
+				$errors['dob']="*Enter a valid date and in valid format";
 				$valid=false;
-				break;
 			}
 		}
-	}
 
+		//Validate Email
 
-	//Validate password/confirm password
-
-	if(strlen($password)==0)
-	{
-		$errors['password']="*Password can't be empty";
-		$valid=false;
-	}
-	else
-	{
-		if($password!=$cpassword)
+		if(strlen($email)==0)
 		{
-			$errors['cpassword']='*Passwords do not match';
+			$errors['email']="*Email can't be empty";
 			$valid=false;
 		}
-	}
-
-	//If everything is valid
-
-	if($valid)
-	{
-
-		$con=mysqli_connect('localhost','Dhruv','u18co019#hmsproject','hms');
-
-		if($con)
+		else if(!filter_var($email,FILTER_VALIDATE_EMAIL)) 
 		{
-			$sql="INSERT INTO students(college_id,first_name,last_name,date_of_birth,mobile,email,password) VALUES('$rnumber',
-			'$fname','$lname','$dob','$phone','$email','$password')";
-			if(mysqli_query($con,$sql)) 
-			{
-				echo 'Entry Successfully Entered';
-			} 
+			$errors["email"]="*Invalid email format";
+			$valid=false;
 		}
 
-		mysqli_close($con);
+		//Validate phone
+
+		if(strlen($phone)==0)
+		{
+			$errors['phone']="*Phone number can't be empty";
+			$valid=false;
+		}
+		else if(strlen($phone)!=10)
+		{
+			$errors['phone']="*Invalid phone number";
+			$valid=false;
+		}
+		else
+		{
+			for($i=0;$i<strlen($phone);$i++)
+			{
+				if(!ctype_digit($phone[$i]))
+				{
+					$errors['phone']="*Invalid phone number";
+					$valid=false;
+					break;
+				}
+			}
+		}
+
+
+		//Validate password/confirm password
+
+		if(strlen($password)==0)
+		{
+			$errors['password']="*Password can't be empty";
+			$valid=false;
+		}
+		else
+		{
+			if($password!=$cpassword)
+			{
+				$errors['cpassword']='*Passwords do not match';
+				$valid=false;
+			}
+		}
+
+		//If everything is valid
+
+		if($valid)
+		{
+
+			if($conn)
+			{
+				$sql="INSERT INTO students(college_id,first_name,last_name,date_of_birth,mobile,email,password) VALUES('$rnumber',
+				'$fname','$lname','$dob','$phone','$email','$password')";
+				if(mysqli_query($conn,$sql)) 
+				{
+					echo 'Account Successfully Created';
+					$_SESSION['username'] = $rnumber;
+					header("location: students/profile.php");
+				} 
+			}
+
+			mysqli_close($conn);
+		}
 	}
-
-
-}
-
 ?>
 
 <!DOCTYPE html>
