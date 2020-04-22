@@ -75,7 +75,7 @@ if(isset($_POST['login']))
 
 
       <p>
-        <label>RollNumber:</label>
+        <label>CollegeId:</label>
         <input type="text" name="RollNumber" placeholder="eg. U18CO019">
       </p>
 
