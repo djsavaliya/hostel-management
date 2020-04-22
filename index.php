@@ -1,32 +1,31 @@
 <?php 
+	session_start();
 
-//Student login
+	require 'config/db_connect.php';
 
-$error='';
-if(isset($_POST['login']))
-{
-  $rno=$_POST['RollNumber'];
-  $psw=$_POST['password'];
-  $con=mysqli_connect('localhost','Dhruv','u18co019#hmsproject','hms');
+	$error='';
+	if(isset($_POST['login']))
+	{
+	  $rno=$_POST['RollNumber'];
+	  $psw=$_POST['password'];
 
-  if($con)
-  {
-    $sql="SELECT * FROM students WHERE college_id='$rno' AND password='$psw' ";
+	  if($conn)
+	  {
+	    $sql="SELECT * FROM students WHERE college_id='$rno' AND password='$psw'";
 
-    $result=mysqli_query($con,$sql);
-    if(mysqli_num_rows($result)>0)
-    {
-      //code
-      echo 'Login Success';
-    }
-    else
-    {
-      $error="*Incorrect username or password";
-    }
-  }
-  mysqli_close($con);
-}
-
+	    $result=mysqli_query($conn,$sql);
+	    if(mysqli_num_rows($result)>0)
+	    {
+	      $_SESSION['username'] = $rno;
+	      header("location: students/profile.php");
+	    }
+	    else
+	    {
+	      $error="*Incorrect username or password";
+	    }
+	  }
+	  mysqli_close($conn);
+	}
 ?>
 
 <!DOCTYPE html>
@@ -70,12 +69,12 @@ if(isset($_POST['login']))
 
 
 
-    <form action="student_login.php" method="post">
+    <form action="index.php" method="post">
 
 
 
       <p>
-        <label>CollegeId:</label>
+        <label>RollNumber:</label>
         <input type="text" name="RollNumber" placeholder="eg. U18CO019">
       </p>
 
