@@ -11,13 +11,22 @@ if(isset($_POST['login']))
 
   if($con)
   {
-    $sql="SELECT * FROM managers WHERE email='$email' AND password='$password' ";
+    $sql="SELECT is_admin FROM managers WHERE email='$email' AND password='$password' ";
 
     $result=mysqli_query($con,$sql);
     if(mysqli_num_rows($result)>0)
     {
-      //code
-      echo 'Login Success';
+      $tuple=mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+      if($tuple[0]['is_admin']==0)
+      {
+           // Redirect to manager page
+      }
+      else
+      {
+           // Redirect to admin page
+      }
+      
     }
     else
     {
