@@ -1,11 +1,45 @@
 <?php 
-	include '../config/db_connect.php';
+	require 'session.php';
 
-	$sql = 'SELECT hostel_name FROM hostels';
-
+	$sql = 'SELECT * FROM hostels';
 	$result = mysqli_query($conn,$sql);
-
 	$hostels = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+	$error='';
+	/*$sql = 'SELECT * FROM applications';
+	$result = mysqli_query($conn,$sql);
+	$applications = mysqli_fetch_assoc($result);
+	//echo $applications['application_id'];*/
+	foreach($hostels as $hostel):
+		//echo 'happenin';
+		if(isset($_POST[$hostel['hostel_id']])){
+			$rooms = $hostel['no_of_rooms'];
+			$students = $hostel['no_of_students'];
+			if($students>=$rooms){
+				$error = '*'.$hostel['hostel_name'].' is full';
+			}
+			else{
+				if($conn){
+					$hid = $hostel['hostel_id'];
+					$sid = $student['student_id'];
+					$sql1 = "INSERT INTO applications VALUES (NULL,'$sid','$hid')";
+					$result1 = mysqli_query($conn,$sql1);
+					//if($result1==true){$error='true';}else{$error='false';}
+					if($result1) {
+						$error = 'Applied for '.$hostel['hostel_name'].'.';
+					}
+					else{
+						$error = 'Unknown Error occured.';
+					}
+					//mysqli_free_result($result1);
+				}
+				else{
+					echo 'Unable to connect to the database.';
+				}
+			}
+			break;
+		}
+	endforeach;
 
 	mysqli_free_result($result);
 	mysqli_close($conn);
@@ -14,23 +48,36 @@
 
 <!DOCTYPE HTML>
 <html>
+	
+	<style>
+		form{
+			width: 100%;
+			border-style: solid;
+		}
+	</style>
+
 	<?php include('templates/header.php'); ?>
 
-	<h4 class="center grey-text">Apply For Hostels</h4>
-	<div class="container">
-		<div class="row">
-			<?php foreach($hostels as $hostel):?>
-				<div class="col s4 md3">
-					<div class="card z-depth-0">
-						<div class="card-content center">
-							<h4><?php echo htmlspecialchars($hostel['hostel_name'])?></h4>
+	<form action="apply.php" method="post">
+		<h4 class="center grey-text">Apply For Hostels</h4>
+		<div class="container">
+			<div class="row">
+				<div style="color:red;"><?php echo $error; ?></div>
+				<?php foreach($hostels as $hostel):?>
+					<div class="col s12 md3">
+						<div class="card z-depth-0">
+							<div class="card-content center">
+								<h4><?php echo htmlspecialchars($hostel['hostel_name']);?></h4>
+								<div class="center">
+									<button type="submit" name="<?php echo htmlspecialchars($hostel['hostel_id']); ?>" class="btn brand z-depth-0">Apply</button>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			</div>
 		</div>
-	</div>
-
+	</form>
 
 	<?php include('templates/footer.php'); ?>
 </html>
