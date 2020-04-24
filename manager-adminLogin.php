@@ -1,40 +1,42 @@
 <?php 
+  session_start();
+  
+  require 'config/db_connect.php';
 
-//Manager Admin login
-
-$error='';
-if(isset($_POST['login']))
-{
-  $email=$_POST['email'];
-  $password=$_POST['password'];
-  $con=mysqli_connect('localhost','Dhruv','u18co019#hmsproject','hms');
-
-  if($con)
+  $error='';
+  if(isset($_POST['login']))
   {
-    $sql="SELECT is_admin FROM managers WHERE email='$email' AND password='$password' ";
+    $email=$_POST['email'];
+    $password=$_POST['password'];
 
-    $result=mysqli_query($con,$sql);
-    if(mysqli_num_rows($result)>0)
+    if($conn)
     {
-      $tuple=mysqli_fetch_all($result,MYSQLI_ASSOC);
+      $sql="SELECT is_admin FROM managers WHERE email='$email' AND password='$password' ";
 
-      if($tuple[0]['is_admin']==0)
+      $result=mysqli_query($conn,$sql);
+      if(mysqli_num_rows($result)>0)
       {
-           // Redirect to manager page
+        $tuple=mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+        if($tuple[0]['is_admin']==0)
+        {
+          $_SESSION['username'] = $email;
+          header("location: managers/profile.php");
+        }
+        else
+        {
+          $_SESSION['username'] = $email;
+          header("location: admins/profile.php");
+        }
+        
       }
       else
       {
-           // Redirect to admin page
+        $error="*Incorrect username or password";
       }
-      
     }
-    else
-    {
-      $error="*Incorrect username or password";
-    }
+    mysqli_close($conn);
   }
-  mysqli_close($con);
-}
 
 ?>
 
