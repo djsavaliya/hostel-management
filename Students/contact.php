@@ -1,5 +1,5 @@
 <?php 
-	include '../config/db_connect.php';
+	require 'session.php';
 
 	$sql = 'SELECT first_name,last_name,mobile,email,hostels.hostel_name FROM managers,hostels WHERE managers.hostel_id=hostels.hostel_id';
 
