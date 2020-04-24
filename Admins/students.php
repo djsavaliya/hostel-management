@@ -1,48 +1,48 @@
 <?php 
 
-$con=mysqli_connect('localhost','Dhruv','u18co019#hmsproject','hms');
+	require 'session.php';
 
-$display=array();
+	$display=array();
 
-if($con)
-{
-	
-	$sql_q1="SELECT * FROM students ORDER BY hostel_id";
-	$sql_q2="SELECT * FROM hostels";
-
-	$result1=mysqli_query($con,$sql_q1);
-	$result2=mysqli_query($con,$sql_q2);
-
-	$students=mysqli_fetch_all($result1,MYSQLI_ASSOC);
-	$hostels=mysqli_fetch_all($result2,MYSQLI_ASSOC);
-
-	foreach($hostels as $hostel)
+	if($conn)
 	{
-		if(isset($_POST[$hostel['hostel_id']]))
+		
+		$sql_q1="SELECT * FROM students ORDER BY hostel_id";
+		$sql_q2="SELECT * FROM hostels";
+
+		$result1=mysqli_query($conn,$sql_q1);
+		$result2=mysqli_query($conn,$sql_q2);
+
+		$students=mysqli_fetch_all($result1,MYSQLI_ASSOC);
+		$hostels=mysqli_fetch_all($result2,MYSQLI_ASSOC);
+
+		foreach($hostels as $hostel)
 		{
-			foreach($students as $student)
+			if(isset($_POST[$hostel['hostel_id']]))
 			{
-				if($student['hostel_id']==$hostel['hostel_id'])
+				foreach($students as $student)
 				{
-					$to_push=array("name"=>$student['first_name'].' '.$student['last_name'],"hostel_name"=>$hostel['hostel_name'],"email"=>$student['email'],"mobile"=>$student['mobile'],"college_id"=>$student['college_id'],
-						"dob"=>$student['date_of_birth']);
+					if($student['hostel_id']==$hostel['hostel_id'])
+					{
+						$to_push=array("name"=>$student['first_name'].' '.$student['last_name'],"hostel_name"=>$hostel['hostel_name'],"email"=>$student['email'],"mobile"=>$student['mobile'],"college_id"=>$student['college_id'],
+							"dob"=>$student['date_of_birth']);
 
-					$display[]=$to_push;
+						$display[]=$to_push;
+					}
 				}
+				break;
 			}
-			break;
 		}
+		
 	}
-	
-}
 
-mysqli_close($con);
+	mysqli_close($conn);
 
 ?>
 
 <!DOCTYPE html>
 
-    <?php require('header.php'); ?>
+    <?php include('templates/header.php'); ?>
 
 	<div style="text-align: center;">
 
@@ -52,7 +52,7 @@ mysqli_close($con);
 
 	</div>
 
-	<form action="adminStudentinfo.php" method="post">
+	<form action="students.php" method="post">
 
 		<?php foreach($hostels as $hostel){ ?>
 
@@ -95,6 +95,6 @@ mysqli_close($con);
 		<?php } ?>
 	</div>
 
-	<?php require('footer.php'); ?>
+	<?php require('templates/footer.php'); ?>
 	
 </html>
