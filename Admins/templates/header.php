@@ -35,7 +35,7 @@
 				<span class="flow-text"><a href="http://localhost/amoc/admins/index.php" class="green-text text-lighten-3 z-depth-0 title-text">Home</a></span>
 			</div>
 			<div class="col s1 push-s7 title-box">
-				<span class="flow-text"><a href="http://localhost/amoc/admins/applications.php" class="green-text text-lighten-3 z-depth-0 title-text">Hostels</a></span>
+				<span class="flow-text"><a href="http://localhost/amoc/admins/hostels.php" class="green-text text-lighten-3 z-depth-0 title-text">Hostels</a></span>
 			</div>
 			<div class="col s1 push-s7 title-box">
 				<span class="flow-text"><a href="http://localhost/amoc/admins/students.php" class="green-text text-lighten-3 z-depth-0 title-text">Students</a></span>
