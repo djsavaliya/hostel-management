@@ -21,6 +21,10 @@
 			margin: 20px auto;
 			padding: 20px;
 		}
+		table,tr,td{
+			border:1px solid black;
+			text-align: center;
+		}
 	</style>
 </head>
 <body class="grey lighten-2">
