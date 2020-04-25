@@ -124,7 +124,7 @@
 		$password= mysqli_real_escape_string($conn,$_POST['password']);
 		$is_admin= mysqli_real_escape_string($conn,$_POST['is_admin']);
 		$hostel_id= mysqli_real_escape_string($conn,$_POST['hostel_id']);
-	echo $date_of_birth;
+	
 	    // create sql
 	    $sql="INSERT INTO managers(first_name,last_name,date_of_birth,mobile,email,password,is_admin,hostel_id) VALUES('$first_name','$last_name','$date_of_birth','$mobile','$email','$password','$is_admin','$hostel_id')";
 

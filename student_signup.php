@@ -76,152 +76,6 @@
 			}
 		}
 
-		//Validate Date of Birth
-
-		if(strlen($dob)!=10)
-		{
-			$errors['dob']="*Enter a valid date and in valid format";
-			$valid=false;
-		}
-		else
-		{
-
-			function check_leap_year($year)
-			{
-				return ($year%4==0) and ($year%100!=0) or ($year%400==0);
-			}
-
-			$date=substr($dob,0,2);
-			$month=substr($dob,3,2);
-			$year=substr($dob,6,4);
-			if(ctype_digit($date) and ctype_digit($month) and ctype_digit($year) and $dob[2]=='-' and $dob[5]=='-')
-			{
-				$date=(int)$date;
-				$month=(int)$month;
-				$year=(int)$year;
-				if($month<1 or $month>12)
-				{
-					$errors['dob']="*Enter a valid date and in valid format";
-					$valid=false;
-				}
-				else
-				{
-					if($month==1)
-					{
-						if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==2) 
-					{
-						if(check_leap_year($year))
-						{
-							if($date<1 or $date>29)
-						    {
-								$errors['dob']="*Enter a valid date and in valid format";
-								$valid=false;
-						    }
-						}
-						else
-						{
-							if($date<1 or $date>28)
-						    {
-								$errors['dob']="*Enter a valid date and in valid format";
-								$valid=false;
-						    }
-						}
-					}
-					elseif($month==3) 
-					{
-					    if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}	
-					}
-					elseif($month==4) 
-					{
-						if($date<1 or $date>30)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==5) 
-					{
-						if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==6) 
-					{
-						if($date<1 or $date>30)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==7) 
-					{
-						if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==8) 
-					{
-						if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==9) 
-					{
-						if($date<1 or $date>30)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==10) 
-					{
-						if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					elseif($month==11) 
-					{
-						if($date<1 or $date>30)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}
-					}
-					else 
-					{
-					    if($date<1 or $date>31)
-						{
-							$errors['dob']="*Enter a valid date and in valid format";
-							$valid=false;
-						}	
-					}
-				}
-			}
-			else
-			{
-				$errors['dob']="*Enter a valid date and in valid format";
-				$valid=false;
-			}
-		}
-
 		//Validate Email
 
 		if(strlen($email)==0)
@@ -290,7 +144,7 @@
 				{
 					echo 'Account Successfully Created';
 					$_SESSION['username'] = $rnumber;
-					header("location: students/profile.php");
+					header("location: Students/profile.php");
 				} 
 			}
 
@@ -301,95 +155,50 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Student Signup</title>
+<?php include('templates/header.php'); ?>
 
-	<style>
-
-	body
-	{
-		background: #eee;
-    }
-    .Signup-form
-    {
-	      border :solid gray 1px;
-	      width: 20%;
-	      border-radius: 5px;
-	      margin: 100px auto;
-	      background: white;
-    }
-    #button
-    {
-	      color :#fff;
-	      background : #337ab7;
-	      padding: 5px;
-	      margin-left:70%;
-    }
-
-	</style>
-
-</head>
-<body>
-
-	<div class="Signup-form">
-
-    <form action="student_signup.php" method="post">
-      <p>
-        <label>First Name: </label>
+	<section class="container grey-text">	
+	<h4 class="center blue-text">Student SignUp Page</h4>
+	<form class="white" action="student_signup.php" method="post">
+    
+        <label><h5>First Name: </h5></label>
         <input type="text" name="fname" value="<?php echo isset($_POST["fname"]) ? $_POST["fname"] : ''; ?>">
-      </p>
-      <div style="color: red;"><?php echo $errors['fname']; ?></div>
-
-      <p>
-        <label>Last Name: </label>
+        <div class="red-text"><?php echo $errors['fname']; ?></div>
+      
+        <label><h5>Last Name: </h5></label>
         <input type="text" name="lname" value="<?php echo isset($_POST["lname"]) ? $_POST["lname"] : ''; ?>">
-      </p>      
-      <div style="color: red;"><?php echo $errors['lname']; ?></div>
+        <div class="red-text"><?php echo $errors['lname']; ?></div>
 
-      <p>
-        <label>College Id: </label>
-        <input type="text" name="RollNumber" value="<?php echo isset($_POST["RollNumber"]) ? $_POST["RollNumber"] : ''; ?>">
-      </p>
-      <div style="color: red;"><?php echo $errors['RollNumber']; ?></div>
+        <label><h5>College Id: </h5></label>
+        <input type="text" name="RollNumber" value="<?php echo isset($_POST["RollNumber"]) ? $_POST["RollNumber"] : ''; ?>"> 
+        <div class="red-text"><?php echo $errors['RollNumber']; ?></div>
 
-      <p>
-      	<label>Date of Birth: </label>
-      	<input type="text" name="DOB" placeholder="dd-mm-yyyy format" 
-      	value="<?php echo isset($_POST["DOB"]) ? $_POST["DOB"] : ''; ?>">
-      </p>
-      <div style="color:red;"><?php echo $errors['dob']; ?></div>
+      	<label><h5>Date of Birth: </h5></label>
+        <input type="date" name="DOB" value="<?php echo isset($_POST["DOB"]) ? $_POST["DOB"] : ''; ?>">
+	    <div class="red-text"><?php echo $errors['dob']; ?></div>
 
-      <p>
-      	<label>Email: </label>
+      	<label><h5>Email: </h5></label>
       	<input type="email" name="email" value="<?php echo isset($_POST["email"]) ? $_POST["email"]: ''; ?>">
-      </p>
-      <div style="color:red;"><?php echo $errors['email']; ?></div>
+        <div class="red-text"><?php echo $errors['email']; ?></div>
 
-      <p>
-      	<label>Phone: </label>
+      	<label><h5>Phone: </h5></label>
       	<input type="text" name="phone" value="<?php echo isset($_POST["phone"]) ? $_POST["phone"]: '';?>">
-      </p>
-      <div style="color:red;"><?php echo $errors['phone']; ?></div>
+        <div class="red-text"><?php echo $errors['phone']; ?></div>
 
-      <p>
-        <label>Password: </label>
+        <label><h5>Password: </h5></label>
         <input type="password" name="password" value="<?php echo isset($_POST["password"]) ? $_POST["password"] : ''; ?>">
-      </p>
-      <div style="color: red;"><?php echo $errors['password']; ?></div>
+        <div class="red-text"><?php echo $errors['password']; ?></div>
 
-      <p>
-      	<label>Confirm Password: </label>
+      	<label><h5>Confirm Password: </h5></label>
       	<input type="password" name="cpassword" value="<?php echo isset($_POST["cpassword"]) ? $_POST["cpassword"] : ''; ?>">
-      </p>
-      <div style="color: red;"><?php echo $errors['cpassword']; ?></div>
+        <div class="red-text"><?php echo $errors['cpassword']; ?></div>
 
-      <div>
-        <input type="submit" id="button" name="signup" value="Create">
+      <div class="center">
+        <input type="submit" name="signup" value="Create" class="btn brand z-depth-0">
       </div>
 
     </form>
+</section>
 
-  </div>
-
-</body>
+<?php include('templates/footer.php'); ?>
 </html>

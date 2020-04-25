@@ -30,78 +30,40 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Student Login Page</title>
+<?php include('templates/header.php'); ?>
 
-  <style>
+<section class="container grey-text">	
+	<h4 class="center blue-text">Student Login</h4>
+ 
+    <form class="white" action="index.php" method="POST">
 
-    body
-    {
-      background: #eee;
-    }
-    .login-form
-    {
-      border :solid gray 1px;
-      width: 20%;
-      border-radius: 5px;
-      margin: 100px auto;
-      background: white;
-    }
-    #button
-    {
-      color :#fff;
-      background : #337ab7;
-      padding: 5px;
-      margin-left:70%;
-    }
+        <label><h5>Roll Number : </h5></label>
+  	    <input type="text" name="RollNumber" >
 
-
-  </style>
-
-</head>
-<body>
-
-  <h1 style="text-align: center;">
-        <u>Student Login</u>
-  </h1>
-
-  <div class="login-form">
-
-
-
-    <form action="index.php" method="post">
-
-
-
-      <p>
-        <label>RollNumber:</label>
-        <input type="text" name="RollNumber" placeholder="eg. U18CO019">
-      </p>
-
-      <p>
-        <label>Password:</label>
+        <label><h5>Password :</h5></label>
         <input type="password" name="password">
-        <div style="color:red;"><?php echo $error; ?></div>
-      </p>
+        <div class="red-text"><?php echo $error; ?></div>
+      
 
-      <div>
-        <input type="submit" id="button" name="login" value="Login">
+      <div class="left">
+        <input type="submit" class="btn brand z-depth-0" name="login" value="Login">
       </div>
-
+<br><br>
+      <h6>
+      <span style="margin-left:120px;"> Don't have an account yet?
+      <a href="http://localhost/amoc/student_signup.php" class="btn brand z-depth-0">Signup</a>
+      </span>
+    </h6>
     </form>
-    <p>
-      Don't have an account yet?
-      <a href="http://localhost/HMS/student_signup.php">Signup</a>
-    </p>
 
-  </div>
+    
 
+  </section>
 
-  <h2 style="text-align: center;">
+   
+  <h5 style="text-align: center;">
+  Not a student? Click <a href="http://localhost/amoc/manager-adminLogin.php" class="blue-text text-darken-2 z-depth-0">HERE</a> to login 
+  </h5>
 
-  Not a student? Click <a href="http://localhost/HMS/manager-adminLogin.php">here</a> to login    
-
-  </h2>
-
-</body>
+  <?php include('templates/footer.php'); ?>
 </html>

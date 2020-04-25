@@ -6,10 +6,12 @@
 	$hostels = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
 	$error='';
-	/*$sql = 'SELECT * FROM applications';
-	$result = mysqli_query($conn,$sql);
-	$applications = mysqli_fetch_assoc($result);
-	//echo $applications['application_id'];*/
+	if($student['hostel_id']==NULL)
+		$status='Not applied';
+	else
+		$status='You are a hostelite';
+
+	
 	foreach($hostels as $hostel):
 		//echo 'happenin';
 		if(isset($_POST[$hostel['hostel_id']])){
@@ -19,19 +21,43 @@
 				$error = '*'.$hostel['hostel_name'].' is full';
 			}
 			else{
-				if($conn){
-					$hid = $hostel['hostel_id'];
-					$sid = $student['student_id'];
-					$sql1 = "INSERT INTO applications VALUES (NULL,'$sid','$hid')";
-					$result1 = mysqli_query($conn,$sql1);
-					//if($result1==true){$error='true';}else{$error='false';}
-					if($result1) {
-						$error = 'Applied for '.$hostel['hostel_name'].'.';
-					}
-					else{
-						$error = 'Unknown Error occured.';
-					}
-					//mysqli_free_result($result1);
+				if($conn)
+				{
+						$hid = $hostel['hostel_id'];
+						$sid = $student['student_id'];
+
+						$check=true;
+
+						$sql_check= "SELECT * FROM applications WHERE student_id='$sid' ";
+						$result = mysqli_query($conn,$sql_check);
+						if(mysqli_num_rows($result)>0)
+						{
+							$check=false;
+							if($student['hostel_id']==NULL)
+								$status='Applied but not yet accepted';
+							else
+								$status='You are a hostelite';
+						}
+
+						if($check)
+						{
+							$sql1 = "INSERT INTO applications VALUES (NULL,'$sid','$hid')";
+							$result1 = mysqli_query($conn,$sql1);
+							//if($result1==true){$error='true';}else{$error='false';}
+							if($result1)
+							{
+								$error = 'Applied for '.$hostel['hostel_name'].'.';
+								$status='Applied but not yet accepted';
+							}
+							else
+							{
+								$error = 'Unknown Error occured.';
+							}
+				        }
+				        else
+				        {
+				        	$error='Already applied for a hostel';
+				        }
 				}
 				else{
 					echo 'Unable to connect to the database.';
@@ -57,7 +83,7 @@
 	</style>
 
 	<?php include('templates/header.php'); ?>
-
+	<b style="color:red;"><?php echo $status; ?></b>
 	<form action="apply.php" method="post">
 		<h4 class="center grey-text">Apply For Hostels</h4>
 		<div class="container">

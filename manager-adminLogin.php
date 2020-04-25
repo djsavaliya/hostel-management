@@ -42,67 +42,39 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Manager-Admin Login Page</title>
 
-  <style>
+<?php include('templates/header.php'); ?> 
 
-    body
-    {
-      background: #eee;
-    }
-    .login-form
-    {
-      border :solid gray 1px;
-      width: 20%;
-      border-radius: 5px;
-      margin: 100px auto;
-      background: white;
-    }
-    #button
-    {
-      color :#fff;
-      background : #337ab7;
-      padding: 5px;
-      margin-left:70%;
-    }
+<section class="container grey-text">	
 
-
-  </style>
-
-</head>
-<body>
-
-  <h1 style="text-align: center;">
-        <u>Manager/Admin Login</u>
-  </h1>
-
-  <div class="login-form">
+	<h4 class="center blue-text">Manager/Admin Login</h4>
+   
+    <form class="white" action="manager-adminLogin.php" method="POST">
 
 
 
-    <form action="manager-adminLogin.php" method="post">
+
+  <label><h5> Email ID : </h5></label>
+	<input type="email" name="email">
+	
 
 
+	<label><h5>Password : </h5></label>
+	<input type="password" name="password" >
+	<div class="red-text"><?php echo $error ?></div>
 
-      <p>
-        <label>Email:</label>
-        <input type="email" name="email">
-      </p>
+  <div class="center" >
+	<input type="submit" name="login" value="Login" class="btn brand z-depth-0">
+	</div>
 
-      <p>
-        <label>Password:</label>
-        <input type="password" name="password">
-        <div style="color:red;"><?php echo $error; ?></div>
-      </p>
-
-      <div>
-        <input type="submit" id="button" name="login" value="Login">
-      </div>
+     
 
     </form>
 
-  </div>
+  
 
-</body>
+  </section>
+
+<?php include('templates/footer.php'); ?>
+
 </html>
