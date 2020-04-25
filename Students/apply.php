@@ -6,6 +6,11 @@
 	$hostels = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
 	$error='';
+	if($student['hostel_id']==NULL)
+		$status='Not applied';
+	else
+		$status='You are a hostelite';
+
 	
 	foreach($hostels as $hostel):
 		//echo 'happenin';
@@ -28,6 +33,10 @@
 						if(mysqli_num_rows($result)>0)
 						{
 							$check=false;
+							if($student['hostel_id']==NULL)
+								$status='Applied but not yet accepted';
+							else
+								$status='You are a hostelite';
 						}
 
 						if($check)
@@ -38,6 +47,7 @@
 							if($result1)
 							{
 								$error = 'Applied for '.$hostel['hostel_name'].'.';
+								$status='Applied but not yet accepted';
 							}
 							else
 							{
@@ -73,7 +83,7 @@
 	</style>
 
 	<?php include('templates/header.php'); ?>
-
+	<b style="color:red;"><?php echo $status; ?></b>
 	<form action="apply.php" method="post">
 		<h4 class="center grey-text">Apply For Hostels</h4>
 		<div class="container">
