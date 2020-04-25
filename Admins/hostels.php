@@ -50,9 +50,7 @@
 
 <!DOCTYPE HTML>
 <html>
-<script>
-var check=0;
-</script>
+
 	<?php include('templates/header.php'); ?>
 
 	<h4 class="center grey-text">Hostels</h4>
@@ -118,25 +116,6 @@ var check=0;
 
 
 <?php include('templates/footer.php'); ?>
-  <script>
-		function myFunction() {
-		  var txt='';
-		  // if(check==0)
-		  // {
-		          var r = confirm("Are you sure to Remove manager ?");
-		          if (r == true) {
-		            txt = "Removed";
-		            check=1;
-		          } else {
-		            txt = "Remove Manager";
-		          }
-		          document.getElementById("demo").innerHTML = txt;
-		  // }
-		  // else
-		  // {
-		  //   location.href="appoint_manager.php";
-		  // }
-		}
-	</script>
+
 
 </html>
