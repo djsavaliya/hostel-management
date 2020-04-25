@@ -25,6 +25,15 @@
 			border:1px solid black;
 			text-align: center;
 		}
+		footer{
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			background-color: #ffff99;
+			color: white;
+			text-align: center;
+		}
 	</style>
 </head>
 <body class="grey lighten-2">
