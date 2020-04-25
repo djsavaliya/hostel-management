@@ -6,9 +6,10 @@
 	$result1 = mysqli_query($conn,$sql1);
 	$students = mysqli_fetch_all($result1,MYSQLI_ASSOC);
 
-	$sql2 = "SELECT * FROM hostels";
+	$sql2 = "SELECT * FROM hostels WHERE hostels.hostel_id = '$hid'";
 	$result2 = mysqli_query($conn,$sql2);
 	$hostel = mysqli_fetch_assoc($result2);
+	//print_r($hostel);
 
 	if($conn)
 	{
