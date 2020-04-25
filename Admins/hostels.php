@@ -61,7 +61,7 @@
 	<?php foreach($hostels as $hostel){ ?>
 	<div class="col s6 md3">
 	  <div class="card z-depth-0">
-	  <img src="" class="pizza">
+	  
 	    <div class="card-content center">
 	    <h6>Hostel ID : <?php echo htmlspecialchars($hostel['hostel_id']); ?></h6>
 	    <h6>Hostel Name : <?php echo htmlspecialchars($hostel['hostel_name']); ?></h6>
