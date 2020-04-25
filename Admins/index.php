@@ -5,7 +5,6 @@
 <!DOCTYPE HTML>
 <html>
 	<?php include('templates/header.php'); ?>
-
 	<h2>About Hostel</h2>
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec nam aliquam sem et tortor consequat id porta nibh. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat. Vel pharetra vel turpis nunc eget lorem. Eget sit amet tellus cras adipiscing enim eu turpis. Malesuada fames ac turpis egestas. Purus ut faucibus pulvinar elementum integer. Rutrum quisque non tellus orci. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Amet massa vitae tortor condimentum lacinia. Orci a scelerisque purus semper eget duis at. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Aliquet porttitor lacus luctus accumsan tortor posuere. Diam volutpat commodo sed egestas egestas fringilla. Felis imperdiet proin fermentum leo vel.</p>
 
