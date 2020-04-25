@@ -15,7 +15,8 @@
 
 		$students=mysqli_fetch_all($result1,MYSQLI_ASSOC);
 		$hostels=mysqli_fetch_all($result2,MYSQLI_ASSOC);
-
+if(!empty($students))
+{
 		foreach($hostels as $hostel)
 		{
 			if(isset($_POST[$hostel['hostel_id']]))
@@ -33,7 +34,9 @@
 				break;
 			}
 		}
-		
+}
+else
+$display[]=array("name"=>'None',"hostel_name"=>'None',"email"=>'None',"mobile"=>'None',"college_id"=>'None',"dob"=>'None');
 	}
 
 	mysqli_close($conn);
@@ -46,9 +49,9 @@
 
 	<div style="text-align: center;">
 
-		<h1>
+		<h3>
 			<u>Student Details</u>
-		</h1>
+		</h3>
 
 	</div>
 
@@ -56,13 +59,13 @@
 
 		<?php foreach($hostels as $hostel){ ?>
 
-			<div>
-
-				<input style="float: left;" type="submit" value="<?php echo htmlspecialchars($hostel['hostel_name']); ?>" 
-				name="<?php echo htmlspecialchars($hostel['hostel_id']); ?>">
-
+			<div style=" margin-bottom:10px; padding-bottom:10px;" class="waves-effect waves-light btn-small brand-text">
+			<h6>
+				<input type="submit" value="<?php echo htmlspecialchars($hostel['hostel_name']); ?>" 
+				name="<?php echo htmlspecialchars($hostel['hostel_id']); ?>"> 
+			</h6>
 			</div>
-
+			
 
 		<?php } ?>
 
